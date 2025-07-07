@@ -1,1 +1,18 @@
+--> ssh bandit1@bandit.labs.overthewire.org -p 2220
+Login using this command and enter the password which you found in readme file
 
+The password for the next level is stored in a file named - (a single dash) in home directory
+
+In Linux, the dash (-) is usually interpreted as a flag or option, not as a filename. So trying to read this file with a normal cat command like:
+--> cat -
+...would not work as expected, it would treat - as a special input source (stdin) instead of a filename.
+
+Redirect input from the file using <
+--> cat < -
+This tells the shell to read input from a file literally named -
+
+               ---------------OR--------------
+
+Use a relative path
+--> cat ./-
+Here, ./ refers to the current directory, so this clearly tells cat that you're trying to read a file called - in the current folder.
