@@ -1,1 +1,18 @@
+ssh bandit8@bandit.labs.overthewire.org -p 2220 
 
+In this level, the password is stored in the only line that appears once in the file data.txt.
+
+sort data.txt | uniq -u
+Why This Command?
+At first, it might seem like just using uniq -u would be enough to find the unique line. However, there's an important detail:
+uniq -u does not check the entire file for uniqueness.
+It only compares adjacent lines.
+That means if the same line appears multiple times but not next to each other, uniq -u will not detect it unless the file is sorted first.
+
+Explanation of Each Part:
+sort data.txt→ Sorts all the lines in the file so that identical lines are grouped together.
+| → Pipes the output of the sort command to the next command.
+uniq -u → Filters the input to show only lines that occur exactly once.
+The output will be a single unique line — this line contains the password for the next level.
+
+Copy that line and use it to log into the next level.
