@@ -1,1 +1,18 @@
+--> ssh bandit.labs.overthewire.org -p 2220 -l bandit0
 
+ssh: Secure Shell, a program used to log in to remote servers securely.
+bandit.labs.overthewire.org: The hostname (remote server address) you're connecting to.
+-p 2220: Specifies the port number (default SSH is 22, but Bandit uses port 2220).
+-l bandit0: Tells SSH to log in as the user bandit0.
+This command connects you to the Bandit server as the bandit0 user using SSH on port 2220.
+
+Enter the password bandit0 and then you'll be logged in as bandit0
+
+Once you're logged in as bandit0, the password for bandit1 is stored in a file named readme.
+--> cat readme
+cat: Short for concatenate, but commonly used to display the contents of a file.
+readme: The name of the file that contains the password.
+This command will print the password for the next level (bandit1) on the screen.
+
+Save the password as you'll need it when logging in as bandit1
+(It's a good practice to save all the passwords in a Word file for reference or in case you want to re-enter a level.)
