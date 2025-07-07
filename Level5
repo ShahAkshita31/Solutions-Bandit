@@ -3,6 +3,8 @@ ssh bandit4@bandit.labs.overthewire.org -p 2220
 
 In this level, the goal is to find a file that is human-readable—specifically, an ASCII text file.
 All the files are stored inside the inhere directory, and only one of them is a readable text file.
+--> cd inhere 
+To get inside the inhere directory
 
 To find the readable file, use one of the following commands:
 
