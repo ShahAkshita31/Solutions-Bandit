@@ -1,1 +1,24 @@
+ssh bandit6@bandit.labs.overthewire.org -p 2220 
+In this level, the password is stored in a file somewhere on the entire server, and the file must meet specific conditions:
+
+It is owned by user bandit7
+
+It belongs to group bandit6
+
+It is exactly 33 bytes in size
+
+Command to Use:
+find / -type f -user bandit7 -group bandit6 -size 33c 2>/dev/null
+
+Explanation of the Command:
+find / → Start searching from the root directory (/), meaning search the entire file system.
+
+-type f → Look for files only.
+-user bandit7 → The file must be owned by user bandit7.
+-group bandit6 → The file must belong to group bandit6.
+-size 33c → File size must be exactly 33 bytes (c stands for bytes).
+2>/dev/null → This part redirects error messages (like "Permission denied") to /dev/null, effectively hiding them from your output so you can see only valid results.
+
+--> cat /var/lib/dpkg/info/bandit7.password
+This will display the password for the next level.
 
