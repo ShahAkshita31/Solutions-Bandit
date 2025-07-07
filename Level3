@@ -1,1 +1,15 @@
+ssh banit2@bandit.labs.overthewire.org -p 2220 
+and the password which we found in level 2
 
+In Linux, the shell treats each word (separated by spaces) as a separate argument or command. 
+So, when a filename contains spaces, you need to tell the shell that those spaces are part of the same filename.
+
+Using backslashes (\) before each space
+--> cat spaces\ in\ this\ filename
+Each backslash tells the shell that the space following it is part of the filename, not a separator.
+
+                                -----------OR------------
+
+Using quotation marks
+--> cat "spaces in this filename"
+Quotation marks tell the shell to treat everything inside as a single argument, including any spaces.
