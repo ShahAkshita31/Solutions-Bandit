@@ -1,2 +1,28 @@
 ssh bandit5@bandit.labs.overthewire.org -p 2220 
 
+In this level, the password is stored in a file that meets specific conditions:
+It is exactly 1033 bytes in size.
+It is not executable.
+It is a human-readable ASCII text file.
+
+-->cd inhere 
+
+You can use either of the following find commands:
+find . -type f -size 1033c ! -executable -exec file {} + | grep "ASCII"
+                  ------------OR-------------
+find . -type f -size 1033c ! -executable -exec file {} \; | grep "text"
+Command Breakdown
+find . → Start searching from the current directory (.).
+-type f → Look for files only.
+-size 1033c → Match files that are exactly 1033 bytes (the c stands for bytes, or characters).
+! -executable → Find files that are not executable (i.e., cannot be run like a program or script).
+-exec file {} \; or -exec file {} + → Run the file command on each (or all) matching files to detect their type.
+{} is a placeholder for each file.
+\; ends the -exec clause (one file at a time).
++ runs file on multiple files at once (faster).
+| grep "ASCII" or | grep "text" → Show only the results that contain "ASCII" or "text" (indicating human-readable content).
+
+Once you identify the file, use:
+cat ./inhere/maybehere07/.file2
+
+This will display the password for the next level.
