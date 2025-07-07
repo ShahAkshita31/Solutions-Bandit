@@ -1,1 +1,13 @@
+ssh bandit9@bandit.labs.overthewire.org -p 2220 
 
+In this level, the password is hidden inside the file data.txt, among a few human-readable strings, and is preceded by several = characters.
+
+strings data.txt | grep =
+Explanation of the Command:
+strings data.txt→ Extracts and displays only printable ASCII text from the file.
+This is useful for analyzing binary files, as it helps uncover hidden readable data.
+
+| → Pipes the output of the strings command to the next command.
+grep = → Filters and shows only the lines that contain an = character, since we’re told the password is preceded by several of them.
+
+Look through the output for a line that contains a series of = characters followed by some readable text — that text is the password for the next level.
