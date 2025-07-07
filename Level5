@@ -1,1 +1,26 @@
+ssh bandit4@bandit.labs.overthewire.org -p 2220 
 
+
+In this level, the goal is to find a file that is human-readable—specifically, an ASCII text file.
+All the files are stored inside the inhere directory, and only one of them is a readable text file.
+
+To find the readable file, use one of the following commands:
+
+find . -type f -exec file {} \; | grep "ASCII"
+      -------------OR--------------
+find . -type f -exec file {} + | grep "ASCII"
+
+Explanation of the Command:
+find . → Start searching from the current directory (. means “here”).
+-type f → Look for files only (ignore directories).
+-exec file {} \; → For each file found, run the file command to inspect its contents and determine the file type.
+{} is a placeholder for the current file.
+\; ends the -exec clause.
+-exec file {} + → A more efficient version of -exec, which runs file on multiple files at once.
+| grep "ASCII" → Filter the output to show only ASCII text files, which are human-readable.
+./-file07: ASCII text
+That means -file07 is the only human-readable file.
+
+
+To print the password stored in the file:
+cat ./-file07
