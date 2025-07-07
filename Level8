@@ -9,7 +9,7 @@ head -n 10 shows the first 10 lines of the file.
 This helps you understand how the hashes or data are formatted. The word is written and then hash is written right next to it so we just need to find the word millionth 
 
 Then, search for the line containing the word millionth:
-grep millionth data.txt
+--> grep millionth data.txt
 grep is a command used to search for specific text or patterns inside files or outputs.
 This will return the line that contains the word millionth, along with the password that follows it.
 
