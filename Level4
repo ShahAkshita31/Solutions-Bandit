@@ -1,1 +1,15 @@
+ssh bandit3@bandit.labs.overthewire.org -p 2220  
+
+In this level, the password for the next level is stored inside a hidden file located within the inhere directory.
+In Linux or Unix systems, any file or directory that begins with a dot (.) is considered hidden and won’t show up with a normal ls command.
+
+List all entries, including hidden ones:
+
+ls -a
+-a means list all files, including . (current directory) and .. (parent directory).
+------------OR-----------
+ls -A
+-A is similar but excludes . and .., which can make things easier to read. Will work here because file has ... before the name
+
+--> cat .  ..  ...Hiding-From-You
 
