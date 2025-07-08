@@ -1,1 +1,46 @@
+ssh bandit33@bandit.labs.overthewire.org -p 2220 
+When you log in as bandit33, you’ll notice something unusual — everything you type is automatically converted to uppercase.
 
+For example:
+
+bash
+Copy
+Edit
+ls
+is interpreted as:
+
+nginx
+Copy
+Edit
+LS
+This is a restricted environment where the shell has been configured to transform input to uppercase, effectively breaking most Linux commands (since they are case-sensitive).
+
+🧠 How to Escape the Uppercase Shell
+To break out of this uppercase-wrapping behavior, you can run:
+
+bash
+Copy
+Edit
+$0
+🔍 Why $0 Works:
+$0 in shell scripting represents the name of the shell you're running.
+
+When you type $0, it executes a new shell (like spawning a subshell).
+
+The new shell does not inherit the uppercase constraint, so you regain normal control.
+
+Once you're in the subshell, you can verify it’s working correctly:
+
+bash
+Copy
+Edit
+whoami
+# Output: bandit33
+🔐 Get the Password for the Next Level
+Now that your shell is working normally again, retrieve the next level’s password:
+
+bash
+Copy
+Edit
+cat /etc/bandit_pass/bandit33
+🎉 Done! You’ve now bypassed the uppercase filter and accessed the password for bandit34.
