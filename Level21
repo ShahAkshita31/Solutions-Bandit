@@ -1,1 +1,29 @@
+Login using command: ssh bandit20@bandit.labs.overthewire.org -p 2220 
+
+In this level, your goal is to create a small listening service (daemon) that sends the password to anyone who connects to it. 
+Another binary on the system will connect to this listener automatically, expecting the password.
+
+echo "password_for_this_level" | nc -l -p 1234 & 4444
+
+Explanation of Each Part:
+echo "password_for_this_level" → Prints the password for the current level.
+| → Pipes that password into the next command (nc).
+nc -l -p 1234 → Uses Netcat to:
+-l → Listen for incoming connections.
+-p 1234 → Listen on port 1234.
+& → Runs the entire command in the background.
+This means:
+Your terminal is free to run other commands.
+The Netcat listener keeps running silently.
+
+What Is a Network Daemon?
+A network daemon is a background program that Listens for incoming connections and Responds to specific requests
+In this case, Netcat (nc) acts as a simple network daemon — quietly sitting and waiting for a connection, and when something connects, it sends the password.
+Think of it like a silent server that will deliver a message once and then shut down.
+
+Now that the listener is running in the background, run the provided binary (probably named suconnect or connect) like this:
+./suconnect 1234
+This binary connects to port 1234 on localhost.
+
+It receives the password from your Netcat listener.
 
