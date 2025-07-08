@@ -1,1 +1,22 @@
+Already looged as used Private key 
+
+In this level, the goal is not just to find the password, but to also send it to a specific port on localhost (your own machine) to receive the next password.
+
+Step 1: Retrieve the Password for This Level
+Use the following command to read the current level's password:
+--> cat /etc/bandit_pass/bandit14
+
+Step 2: Send the Password to Port 30000 on localhost
+Now that you have the password, use nc (Netcat) to send it:
+--> nc localhost 30000
+After running the command, paste the password and press Enter.
+
+Explanation of the Command:
+nc: Stands for Netcat, a tool used to read/write data over TCP or UDP connections.
+localhost: Refers to your own machine.
+30000: The port number the server is listening on.
+Netcat allows your system to "talk" to another service (in this case, a service running on port 30000) by sending or receiving raw text data.
+
+Once you send the password, the service running on port 30000 will respond with the password for the next level.
+
 
