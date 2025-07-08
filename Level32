@@ -2,48 +2,25 @@ ssh bandit31@bandit.labs.overthewire.org -p 2220
 
 In this level, you’re working with a Git repository where the goal is to:
 
-Create a new file in the repository,
-
-Stage and commit that file locally,
-
-Push the commit to the remote master branch.
-
+Create a new file in the repository, Stage and commit that file locally, Push the commit to the remote master branch.
 Once the changes are pushed, a server-side hook or automation on the remote end processes your commit and reveals the password.
 
-🧭 Step-by-Step Instructions
-✅ 1. Navigate to the Cloned Repository
-bash
-Copy
-Edit
+Step 1. Navigate to the Cloned Repository
 cd /tmp/<your_cloned_repo>  # Replace with your actual path
-📝 2. Create a New File
+
+Step 2. Create a New File
 You can create any file (e.g., report.txt):
-
-bash
-Copy
-Edit
 echo "This is a test commit" > report.txt
-📥 3. Stage the File
-Use git add to stage the file for commit:
 
-bash
-Copy
-Edit
-git add report.txt
-✅ 4. Commit the File
-Now commit your staged change with a message:
+Step 3. Stage the File
+Use git add to stage the file for commit: git add report.txt
 
-bash
-Copy
-Edit
-git commit -m "Adding a test report file"
-⬆️ 5. Push to Remote master Branch
-Push your changes using:
+Step 4. Commit the File
+Now commit your staged change with a message: git commit -m "Adding a test report file"
 
-bash
-Copy
-Edit
-git push origin master
+Step 5. Push to Remote master Branch
+Push your changes using: git push origin master
+
 Once the push is successful, the server will automatically process your commit and return the password to your terminal output.
 
 
