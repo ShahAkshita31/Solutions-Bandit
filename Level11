@@ -1,1 +1,11 @@
+ssh bandit10@bandit.labs.overthewire.org -p 2220
 
+In this level, the password is stored in the file data.txt, but it's encoded in Base64 format.
+base64 -d data.txt
+
+Explanation of the Command:
+base64 → A Linux command-line tool used to encode or decode data in Base64.
+-d → Tells the command to decode the content (instead of encoding it).
+data.txt → The file that contains the Base64-encoded password.
+
+The command will output the decoded password, which you can then use to log in to the next level.
