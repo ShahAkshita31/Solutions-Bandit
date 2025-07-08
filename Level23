@@ -1,1 +1,40 @@
+ssh bandit22@bandit.labs.overthwire.org -p 2220 
 
+In this level, a cron job runs every minute as user bandit23, and you have to simulate what the job is doing in order to discover the password for the next level.
+
+Step 1: Check the Cron Job Directory
+As with the previous level, start by listing the contents of the cron job directory: ls -la /etc/cron.d
+You’ll see a file named: cronjob_bandit23
+
+Step 2: Inspect the Cron Job File
+Use the cat command to see what it contains: cat /etc/cron.d/cronjob_bandit23
+It should show something like: * * * * * bandit23 /usr/bin/cronjob_bandit23.sh
+So, every minute, the system runs: /usr/bin/cronjob_bandit23.sh as user bandit23.
+
+Step 3: View the Cron Script
+Now, inspect the contents of the script: cat /usr/bin/cronjob_bandit23.sh
+--> The script should look like this:
+    #!/bin/bash
+    myname=$(whoami)
+    echo "I am user $myname" | md5sum | cut -d ' ' -f 1 > /tmp/$myname.md5
+
+Understanding the Script
+This script does the following:
+whoami gets the name of the current user (bandit23, in this case).
+echo "I am user bandit23" prints a string.
+md5sum calculates the MD5 hash of that string.
+cut -d ' ' -f 1 extracts only the hash (removing the trailing dash).
+The result is written to: /tmp/bandit23.md5
+
+Step 4: Reproduce the MD5 Hash Locally
+Run the following command to simulate the same process:
+--> echo "I am user bandit23" | md5sum | cut -d ' ' -f 1
+This will output something like:
+8c674fbee3872c8c8c7c16f40d9e3f4e
+This is the filename (without .md5) that you should look for in /tmp.
+
+🔐 Step 5: Read the Output File
+Now read the file that the cron job created:
+cat /tmp/8c674fbee3872c8c8c7c16f40d9e3f4e
+
+ This file contains the password for bandit23.
