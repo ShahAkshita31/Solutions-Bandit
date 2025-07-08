@@ -1,1 +1,49 @@
+ssh bandit16@bandit.labs.overthewire.org -p 2220 
 
+In this level, your goal is to find a TLS/SSL-enabled service running on the server, retrieve a private SSH key, and then use that key to log in to the next level.
+
+Step 1: Scan the Port Range for SSL Services
+Use nmap to scan all ports from 31000 to 32000 on localhost and detect service versions:
+--> nmap -sV localhost -p 31000-32000
+Command explaination:
+-sV: Enables version detection (helps identify SSL/TLS services).
+-p 31000-32000: Limits the scan to the specified port range.
+
+What to Look For:
+In the output, look for ports labeled with services like:
+ssl/unknown
+ssl/echo
+ssl/echo is often a misconfigured or irrelevant service. The correct one is usually ssl/unknown.
+
+Step 2: Connect to the SSL Port to Retrieve the Private Key
+Use the current level's password to connect and retrieve the private SSH key. You can try:
+--> openssl s_client -connect localhost:31790
+But if you run into a KEYUPDATE issue or see no response, you can use:
+--> echo "password_of_next_level" | openssl s_client -connect localhost:31790
+echo sends the password to the SSL service.
+
+openssl s_client establishes the TLS connection.
+This should return a private SSH key in the output.
+
+Step 3: Save the Private Key in a Secure File
+You won’t have write permission in your current directory, so work in /tmp.
+--> mkdir /tmp/bandit16_sshkey
+--> cd /tmp/bandit16_sshkey
+--> touch private.sshkey
+--> nano private.sshkey    # Paste the private key into this file
+Tip: After pasting, save and exit nano with Ctrl + O, then Enter, and Ctrl + X.
+
+To confirm the key was saved:
+--> cat private.sshkey
+
+Step 4: Fix the File Permissions
+SSH private keys must be readable only by you, or SSH will refuse to use them.
+
+--> chmod 600 private.sshkey
+This sets the permission to: Read and write only by the owner (you).
+
+Step 5: Use the Key to Log In to the Next Level
+Now you can log in to bandit16 using the key:
+--> ssh -i private.sshkey bandit16@bandit.labs.overthewire.org -p 2220
+
+If successful, you’ll be logged into bandit16.
