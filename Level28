@@ -1,1 +1,14 @@
+ssh bandit27@bandit.labs.overthewire.org -p 2220 
 
+In this level, you're provided with a Git repository containing the password to the next level.
+However, since the default shell for bandit27 is restricted (likely a custom script or read-only environment), 
+you won’t be able to clone or modify anything in your home directory.
+
+Solution: Use /tmp to Work Around Restrictions
+The /tmp directory is world-writable, meaning you can create your own working directory there and perform Git operations without permission issues.
+
+Create a temporary directory: mkdir /tmp/bandit27workspace
+cd /tmp/bandit27workspace
+Clone the Git repository: git clone ssh://bandit27-git@localhost/home/bandit27-git/repo
+
+You’ll be prompted for the password you retrieved from the previous level (bandit27).
