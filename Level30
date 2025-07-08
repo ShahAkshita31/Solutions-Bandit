@@ -1,66 +1,31 @@
 ssh bandit29@bandit.labs.overthewire.org -p 2220  
 
 After cloning the repository, the default branch (master or main) contains a README.md file. But when you read it, it says:
-
-arduino
-Copy
-Edit
 Not available in production
 This message suggests that the password might not be in the production environment, but instead hidden in another branch, such as a development branch.
 
-🧭 Step-by-Step Instructions
-✅ 1. List All Available Branches
+1. List All Available Branches
 To view both local and remote-tracking branches:
-
-bash
-Copy
-Edit
 git branch -a
 You might see something like:
-
-bash
-Copy
-Edit
 * main
   remotes/origin/dev
   remotes/origin/main
 This means there is a remote dev branch that we haven’t checked out yet.
 
-🔄 2. Switch to the dev Branch
+2. Switch to the dev Branch
 To view the contents of the development branch:
-
-bash
-Copy
-Edit
 git checkout dev
 This switches your working directory to reflect the contents of the dev branch.
 
-📂 3. Check the Files in dev Branch
+3. Check the Files in dev Branch
 Run:
-
-bash
-Copy
-Edit
 ls
-You’ll likely see a familiar file, such as:
-
-Copy
-Edit
-README.md
-Now open it:
-
-bash
-Copy
-Edit
-cat README.md
+You’ll likely see a familiar file, such as: README.md
+Now open it: cat README.md
 And there it is — the password for bandit29!
 
-🧠 Helpful Git Commands Recap
-git branch -a
-→ Shows all local and remote-tracking branches
-
-git checkout <branchname>
-→ Switches to another branch (downloads if remote)
-
-git show
-→ Shows the latest commit and what changes it made
+Helpful Git Commands Recap
+git branch -a → Shows all local and remote-tracking branches
+git checkout <branchname> → Switches to another branch (downloads if remote)
+git show → Shows the latest commit and what changes it made
