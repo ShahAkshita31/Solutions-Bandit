@@ -1,1 +1,46 @@
+ssh bandit13@bandit.labs.overthewire.org -p 2220
+
+In this level, instead of finding a password, you’re required to use a private key to log in to the next level via SSH.
+
+Public-Key Authentication
+Until now, you’ve been logging into each level using a password. But SSH also supports public-key authentication, where:
+The server stores the public key.
+The client uses the matching private key to authenticate.
+
+Step 1: Locate the Private Key on the Server
+Once logged into bandit13, list the files:
+--> ls
+You’ll see a file named: sshkey.private
+This is the private SSH key you’ll use to connect to bandit14.
+
+Step 2: Copy the Private Key to Your Local System
+You must exit the bandit server and run this command from your local terminal (e.g., Kali Linux):
+-->scp -P 2220 bandit13@bandit.labs.overthewire.org:sshkey.private .
+
+Explanation:
+scp: Secure Copy – used to copy files over SSH.
+-P 2220: Specifies the custom SSH port (note: capital P, because scp is case-sensitive).
+bandit13@bandit.labs.overthewire.org:sshkey.private: Source path – the file sshkey.private on the server.
+.: Destination – the current directory on your machine.
+
+Once copied, check the file:
+--> ls -l sshkey.private
+
+Step 3: Fix File Permissions
+Trying to use the key immediately with:
+--> ssh -i sshkey.private bandit14@bandit.labs.overthewire.org -p 2220
+...will likely throw this error. Permissions 0640 for 'sshkey.private' are too open.
+This happens because, the key is readable by group or others, which is considered insecure by SSH.
+
+Fixing the Permissions:
+You can restrict access by running:
+--> chmod 600 sshkey.private
+This set the file to be accessible only by you (the owner).
+
+Step 4: SSH Using the Private Key
+Now, run the command again:
+--> ssh -i sshkey.private bandit14@bandit.labs.overthewire.org -p 2220
+
+You’ll now be successfully logged in to bandit14 using the private key.
+
 
