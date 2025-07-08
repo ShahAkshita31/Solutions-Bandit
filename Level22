@@ -1,1 +1,37 @@
+ssh bandit21@bandit.labs.overthwire.org -p 2220 
+
+In this level, the password for the next level is being generated and stored automatically by a cron job.
+
+What is a Cron Job?
+A cron job is a time-based task scheduler in Unix/Linux.
+It runs commands or scripts automatically at scheduled intervals — like a built-in task timer.
+The schedule is controlled using 5 asterisks (* * * * *), which means: Run every minute, every hour, every day, every month, and every day of the week.
+
+Step 1: Check the Cron Jobs
+Cron jobs are listed in:
+--> cd /etc/cron.d
+List the files there:
+--> ls -la /etc/cron.d
+You’ll find several files, including one named:
+cronjob_bandit22
+
+Step 2: Inspect the Cron Job File
+Use cat to read the cron job: cat /etc/cron.d/cronjob_bandit22
+You’ll see something like:
+* * * * * bandit22 /usr/bin/cronjob_bandit22.sh
+This means: Every minute, as user bandit22, the system runs: /usr/bin/cronjob_bandit22.sh
+
+Step 3: See What the Script Does
+cat /usr/bin/cronjob_bandit22.sh
+-->It might look like this:
+    #!/bin/bash
+    cat /etc/bandit_pass/bandit22 > /tmp/secret_bandit22
+    This line copies the password from the real password file and writes it to: /tmp/secret_bandit22
+
+Step 4: Read the Password
+Now that you know where the password is stored and that it’s publicly readable (due to 644 permissions), run: cat /tmp/secret_bandit22
+
+This will show you the password for bandit22.
+
+
 
