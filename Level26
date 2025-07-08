@@ -1,1 +1,47 @@
+ssh bandit25@bandit.labs.overthewire.org -p 2220 
 
+In this level, the user bandit26 does not use the default /bin/bash shell, which prevents you from executing commands normally. 
+Your task is to bypass the restricted shell and get access to a real shell to retrieve the next password.
+
+Step 1: Check the User's Default Shell
+To see which shell bandit26 is using, you can inspect the /etc/passwd file: cat /etc/passwd
+You’ll see a line like:
+bandit26:x:1026:1026::/home/bandit26:/usr/bin/showtext
+This tells you that instead of launching /bin/bash, the system runs the program /usr/bin/showtext when bandit26 logs in.
+
+What Is /usr/bin/showtext?
+This is a text viewer, often a wrapper around the more or less command. 
+These are pagers, tools that display long files one screen at a time, useful for viewing large text outputs.
+The trick is: we’ll abuse more to launch vim, and then from inside vim, open a real shell.
+
+Step 2: Connect Using the SSH Key
+You’re given a private SSH key file bandit26.sshkey. Use it to connect:
+ssh -i bandit26.sshkey -p 2220 bandit26@bandit.labs.overthewire.org
+Make sure the key has the right permissions: chmod 600 bandit26.sshkey
+
+Step 3: Trigger more Behavior by Shrinking the Terminal
+To force the output to go through the more pager:
+Resize your terminal to be short (about 5–10 lines tall).
+This causes the output to "pause" with the --More-- prompt.
+At this point, you can interact with more.
+
+Step 4: Enter vim from more
+When --More-- appears:
+Press v
+This launches the vim editor within the pager.
+
+Step 5: Check and Change Shell Inside vim
+Inside vim, type:
+:set shell?
+You’ll see something like: shell=/usr/bin/showtext
+To change it to bash, type: :set shell=/bin/bash
+Verify it again using :set shell?
+
+Step 6: Escape to a Real Shell
+Now that the shell is set to /bin/bash, open it by running: :shell
+
+You are now inside a real bash shell as user bandit26.
+
+Step 7: Get the Password
+Finally, retrieve the password for bandit26: cat /etc/bandit_pass/bandit26
+Copy the password it will be used to log in to bandit27.
