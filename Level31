@@ -1,1 +1,40 @@
+ssh bandit30@bandit.labs.overthewire.org -p 2220 
+When you log in and read the README.md file using:
+
+bash
+Copy
+Edit
+cat README.md
+you'll notice that there’s nothing useful in it. This suggests the information you're looking for may be hidden elsewhere in the Git repository.
+
+🏷️ What Are Git Tags?
+Git tags are used to mark specific commits as important or noteworthy, such as release points, stable versions, or in this case — a secret.
+
+🧭 Step-by-Step Instructions
+✅ 1. List All Tags
+Use the following command to list all available Git tags:
+
+bash
+Copy
+Edit
+git tag
+This will show you tags that may point to important commits (e.g., secret, v1.0, etc.).
+
+🔍 2. Inspect the Tag
+Let’s say one of the tags is called secret. To see what it contains, use:
+
+bash
+Copy
+Edit
+git show secret
+This will display:
+
+The commit the tag points to
+
+Who created it and when
+
+The diff or contents related to that commit
+
+💡 If the password is hidden inside that commit message or file, git show will reveal it.
+
 
