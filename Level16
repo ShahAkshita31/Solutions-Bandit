@@ -1,1 +1,24 @@
+ssh bandit15@bandit.labs.overthewire.org -p 2220 
 
+In this level, your goal is to send the current level's password (for bandit15) to port 30001 on localhost using SSL/TLS encryption.
+--> openssl s_client -connect localhost:30001
+After running this command, type or paste the current level’s password and press Enter. You’ll then receive the password for the next level (bandit16).
+
+Explanation of the Command:
+openssl: A powerful command-line tool for working with SSL/TLS and cryptography.
+s_client: A subcommand used to initiate a TLS/SSL client connection (like a secure version of nc).
+-connect localhost:30001: Tells OpenSSL to connect to localhost on port 30001.
+This opens an encrypted channel between your terminal and the service running on that port.
+
+How It Works:
+Once connected, you'll see a bunch of TLS handshake information. After that, the prompt will wait for you to input something 
+this is where you paste the password for the current level.
+
+Notes on SSL/TLS Status Messages:
+DONE → TLS handshake is complete. The secure connection is now active.
+RENEGOTIATING → The client or server is attempting to redo the handshake — this may be for: Changing encryption keys, Updating session parameters or 
+Triggered by timeouts or policies
+(Note: This is rarely used in modern TLS setups.)
+KEYUPDATE→ Specific to TLS 1.3, where the encryption keys are refreshed without ending the session — improves forward secrecy.
+
+After pasting the password and pressing Enter, the server will respond with the next level’s password.
