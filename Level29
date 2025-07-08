@@ -3,55 +3,33 @@ ssh bandit28@bandit.labs.overthewire.org -p 2220
 After cloning the Git repository into a writable directory (like /tmp), you’ll notice that the file (e.g., README.md) is present, 
 but the password is not directly visible in the current version.
 
-This is where Git’s version control features become powerful — you can inspect the commit history to see what has changed over time, 
+This is where Git’s version control features become powerful you can inspect the commit history to see what has changed over time, 
 including any lines that were added or removed.
 
-Step 1. Clone the Repo (if not already done):
+Step 1. Clone the Repo:
 mkdir /tmp/bandit28
 cd /tmp/bandit28
 git clone ssh://bandit28-git@localhost/home/bandit28-git/repo
 cd repo
-📖 2. View Commit History with Changes:
+
+Step 2. View Commit History with Changes:
 To get a detailed look at what was changed, including added/removed lines:
-
-bash
-Copy
-Edit
 git log -p README.md
-This shows:
+This shows: The author of each commit, date/time and the diff — i.e., the changes made to the file at each commit
 
-The author of each commit
-
-The date/time
-
-The diff — i.e., the changes made to the file at each commit
-
-Alternatively, you can just use:
-
-bash
-Copy
-Edit
-git show
+Alternatively, you can just use: git show
 This shows the latest commit with full diff output.
 
-🧠 Understanding Git Diff Output:
+Understanding Git Diff Output:
 Lines starting with - → Removed lines from the file
-
 Lines starting with + → Added lines to the file
-
 If you see - password: XXXXXX → This line was removed, meaning it existed in a previous commit
-
 A -+ pattern doesn't exist, but you may be referring to a sequence where a line was removed and then another line was added
-
 So, if the password was deleted in a later commit, it can still be seen in the commit history.
 
-🔐 3. Get the Password:
+3. Get the Password:
 Once you spot the removed line that says something like:
-
-diff
-Copy
-Edit
-- password: xWZPtnzHfyTwmEy3rZgG
+- password: password_for_next_level
 That’s the password for bandit28.
 
 Copy it and use it to SSH into the next level.
