@@ -1,1 +1,27 @@
+ssh bandit26@bandit.labs.overthewire.org -p 2220 
 
+You're now inside the vim shell (thanks to the escape method in Level 25), and you've gained real bash access as user bandit26. Now let’s complete this level.
+
+Step 1: Stay in the Current vim Shell
+Do not exit the shell or vim. You're inside an elevated shell because of your bypass, and exiting will return you to the restricted environment.
+
+Step 2: Check the Files in Home Directory
+Run: ls -l
+You should see a file named: bandit27-do
+This binary is the key to progressing. Look closely at its permissions: -rwsr-x--- 1 bandit27 bandit26 7554 May  7 20:14 bandit27-do
+
+What Is setuid?
+rws (instead of rwx) in the owner section of the file permissions means the file has the setuid bit enabled.
+setuid allows the binary to run with the permissions of the file’s owner, not the user executing it.
+
+In this case:
+Owner = bandit27
+You = bandit26
+So, when you run the binary, it runs as bandit27.
+Use whoami to confirm your current user: whoami
+
+Step 3: Use the bandit27-do Program
+Try running the binary with a command to read the next level's password: ./bandit27-do cat /etc/bandit_pass/bandit27
+Because bandit27-do runs as bandit27 and you passed a valid command, it will output the password stored in the protected /etc/bandit_pass/bandit27 file.
+
+You now have the password for bandit27!
