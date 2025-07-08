@@ -1,1 +1,38 @@
+ssh bandit32@bandit.labs.overthewire.org -p 2220 
+In this level, the instructions in the README.md file guide you to create a file named key.txt with specific content. This file needs to be committed and pushed to the remote repository to receive the password for the next level.
+
+🧭 Step-by-Step Instructions
+✅ 1. Create the key.txt File
+Use the echo command to create the file with the required content:
+
+bash
+Copy
+Edit
+echo "May I come in?" > key.txt
+📥 2. Stage the File for Commit
+The repository may have a .gitignore that excludes key.txt, so you’ll need to force-add it:
+
+bash
+Copy
+Edit
+git add -f key.txt
+-f stands for force — it overrides .gitignore rules and stages the file anyway.
+
+✅ 3. Commit the File
+Now, create a commit with a meaningful message:
+
+bash
+Copy
+Edit
+git commit -m "Adding key.txt to request access"
+⬆️ 4. Push to the Remote master Branch
+Push your changes to the remote repository:
+
+bash
+Copy
+Edit
+git push origin master
+🎉 What Happens Next?
+Once the key.txt file is pushed, the server-side Git hook detects it, processes your message, and returns the password for the next level in the terminal output.
+
 
