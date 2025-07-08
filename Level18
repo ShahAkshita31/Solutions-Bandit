@@ -1,1 +1,22 @@
+You’ll be logged in here by level16 itself 
 
+In this level, there are two files in the home directory:
+
+passwords.old
+passwords.new
+
+The password for the next level is the only difference between the two files, and it is found in passwords.new.
+-->diff passwords.new passwords.old
+
+Explanation of the Command:
+diff <file1> <file2>
+→ Compares two files line by line and shows the differences.
+By typing passwords.new as the first file, the output will highlight lines that are different in passwords.new compared to passwords.old.
+
+
+The line starting with < comes from passwords.new.
+The line starting with > comes from passwords.old.
+
+The difference  is the password for the next level.
+
+Take the value shown with the < symbol — that’s the password for bandit18.
