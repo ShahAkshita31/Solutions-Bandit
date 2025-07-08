@@ -1,1 +1,26 @@
+ssh bandit11@bandit.labs.overthewire.org -p 2220 
 
+In this level, the password is stored in a file called data.txt and is encoded using ROT13 encryption.
+What is ROT13?
+ROT13 is a simple letter substitution cipher.
+It replaces each letter with the 13th letter after it in the alphabet.
+Since the alphabet has 26 letters, applying ROT13 twice brings you back to the original text.
+
+For example:
+A → N
+N → A
+B → O
+Z → M
+
+Command to Use:
+--> cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+
+Explanation of the Command:
+cat data.txt → Displays the contents of the file.
+| → Pipes the output from cat into the next command.
+tr 'A-Za-z' 'N-ZA-Mn-za-m' → Uses the tr (translate) command to substitute letters:
+'A-Za-z' → all uppercase and lowercase letters.
+'N-ZA-Mn-za-m' → how those letters should be rotated (13 characters forward).
+This effectively decodes the ROT13 text and reveals the password.
+
+The output of the command will be the decoded password for the next level.
