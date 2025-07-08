@@ -1,1 +1,31 @@
+Login using command: ssh bandit18@bandit.labs.overthewire.org -p 2220 
+
+In this level, when you try to log in to bandit18 using SSH, you are immediately logged out. 
+This happens because the .bashrc file in the user's home directory has been modified in a way that causes the shell to exit as soon as it starts.
+
+What’s Going On?
+.bashrc is a hidden file that runs every time a new interactive shell is opened.
+It's used to customize the shell (e.g., aliases, environment variables).
+But in this case, someone added an exit command to .bashrc, so as soon as the shell opens, it exits immediately — preventing you from doing anything.
+
+Solution: Bypass the Shell Using SSH Command Execution
+Instead of logging in interactively, you can tell ssh to run a single command remotely. This way, .bashrc won’t be executed at all.
+
+--> ssh bandit18@bandit.labs.overthewire.org -p 2220 "cat readme"
+Explanation:
+ssh bandit18@... → You are logging into Bandit level 18.
+-p 2220 → Specifies the custom port used by the Bandit server.
+"cat readme" → The command to run immediately after connecting.
+
+Since you are not opening a full shell, .bashrc is never sourced.
+This avoids the immediate logout problem.
+
+What is .bashrc and Why It Matters
+.bashrc is a configuration script that runs when an interactive, non-login shell is opened.
+
+It’s commonly used to: Set prompt styles, Define environment variables and Create shell aliases or shortcuts
+If .bashrc is misconfigured or includes exit, it can automatically terminate your session, which is exactly what happens in this level.
+
+Running the ssh command above will print the contents of the readme file directly and that file contains the password for bandit19.
+
 
