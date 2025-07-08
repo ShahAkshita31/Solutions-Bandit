@@ -1,1 +1,39 @@
+ssh bandit19@bandit.labs.overthewire.org -p 2220 
+
+In this level, you are given a binary file located in the home directory. The goal is to run that file to get the password for the next level (bandit20).
+
+What Does ./ Mean?
+./bandit20-do
+. → Refers to the current directory.
+/ → Is a path separator.
+So, ./ means: "Run a file that exists in the current directory."
+Without the ./, the shell would try to find the command in the system’s $PATH, and it would fail unless the file is in a directory listed there.
+
+What is setuid?
+Setuid (Set User ID) is a special permission bit on executable files in Linux/Unix.
+
+It means:When the file is executed, it runs with the privileges of the file’s owner, not the user who launched it.
+
+In This Level: The binary is owned by bandit20, but you are logged in as bandit19.
+
+The permission string might look like:
+-rwsr-x---
+Let’s break that down:
+rws (first three characters) → read, write, execute as owner with s meaning setuid is set.
+r-x (group) → read and execute.
+--- (others) → no permission.
+
+So even though you are bandit19, the file runs as bandit20 because of the setuid bit.
+This allows you to run a program with more privileges than you normally have — but only in a controlled way defined by the program.
+
+How to Use It?
+The file likely has a name like bandit20-do, and you can run it with a command like:
+--> ./bandit20-do cat /etc/bandit_pass/bandit20
+
+Here’s what this does:
+./bandit20-do → Runs the binary in the current directory.
+cat /etc/bandit_pass/bandit20 → Is passed as an argument to the binary.
+Since the binary runs as bandit20, it has permission to read the password file — and shows you the password.
+
+Copy the password that gets printed, and use it to log in to bandit20.
 
