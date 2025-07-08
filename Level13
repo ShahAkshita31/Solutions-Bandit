@@ -1,1 +1,67 @@
+ssh bandit12@bandit.labs.overthewire.org -p 2220 
+
+In this level, the password is buried inside a file that has been hexdumped and then compressed multiple times using various formats. 
+We'll tackle this in three main steps:
+
+Step 1: Creating a Working Directory
+To avoid cluttering your home directory, we’ll do all the work in a temporary directory.
+Navigate to the /tmp folder:
+--> cd /tmp
+Create a new temporary directory (named tmpdir):
+-->mkdir tmpdir
+         --------OR--------
+--> mktemp -d
+(This creates a uniquely named temporary directory.)
+
+Enter the new directory:
+--> cd tmpdir
+
+Copy the data.txt file from the home directory to current directory ~/ specifies from home directory . specifies current directory:
+--> cp ~/data.txt .
+
+Rename the copied file:
+--> mv data.txt data_hexdump
+This helps identify that it’s a hexdump file.
+
+Step 2: Reversing the Hexdump
+The file is a hexdump and needs to be reversed to get back the original binary content.
+
+Reverse the hexdump using xxd:
+--> xxd -r data_hexdump comp_data
+xxd is a tool to create or reverse a hexdump.
+-r means reverse the hexdump.
+data_hexdump is the input file.
+comp_data is the output binary file that we'll now begin decompressing.
+
+Step 3: Decompressing the File (Multiple Layers)
+Now that you’ve reconstructed the binary file, it turns out it's been compressed multiple times using different methods. We'll identify each format and decompress step-by-step.
+
+Repeated Process:
+Each time, run file to identify the compression type, rename the file with the appropriate extension, and decompress.
+Check the file type:
+file comp_data
+
+Let’s say the result is:gunzip
+comp_data: gzip compressed data
+Rename the file with the correct extension and decompress: gz is the extension
+mv comp_data step1.gz
+gunzip step1.gz
+
+Repeat the process:
+file step1          # Shows: bzip2 compressed data
+mv step1 step2.bz2
+bunzip2 step2.bz2
+And so on...
+You may encounter:
+
+gzip → use gunzip
+bzip2 → use bunzip2
+tar → use tar -xf
+POSIX tar archive again → tar -xf
+
+Repeat this cycle until the final file reveals the password.
+(Dont panic you are following the correct path, you have to decompress file for 8-9 times and then you'll reach to password)
+
+This will reveal the password for the next level.
+
 
